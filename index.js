@@ -5,25 +5,24 @@ require("dotenv").config();
 const connectDB = require("./config/db");
 const contentRoutes = require("./routes/contentRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const enquiryRoutes = require("./routes/enquiries"); // ✅ ADD
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-app.use(cors({
-  origin: [
-    process.env.CLIENT_URL,       // https://vignaharta-usha.vercel.app
-    "http://localhost:5173"
-  ],
-  credentials: true
-}));
-
+app.use(
+  cors({
+    origin: [process.env.CLIENT_URL, "http://localhost:5173"],
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => res.send("✅ API Running"));
 
 app.use("/api/content", contentRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/enquiries", enquiryRoutes); // ✅ ADD
 
 const PORT = process.env.PORT || 5000;
 
